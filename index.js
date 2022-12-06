@@ -7,8 +7,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors)
 
-// ROUTES
+// REDIRECT 
+app.get('/', (req, res) => {
+    res.redirect('/api/bookmarks');
+})
 
+// CONTROLLERS
+const userController = require("./controller/UserController");
+app.use("/users", userController);
 
 // PORT
 
