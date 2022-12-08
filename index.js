@@ -16,7 +16,9 @@ app.get('/', (req, res) => {
 const userController = require("./controller/UserController");
 app.use("/api/tickethub/users", userController);
 
-// PORT
+const ticketController = require("./controller/TicketController");
+app.use("/api/tickethub/tickets", ticketController);
 
+// PORT
 const PORT = 8800
 app.listen(PORT, () => console.log(`=== BACKEND SERVER RUNNING. LOCAL HOST: ${PORT} ===`))
