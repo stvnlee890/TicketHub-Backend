@@ -16,8 +16,6 @@ app.get('/', (req, res) => {
 const userController = require("./controller/UserController");
 app.use("/api/tickethub/users", userController);
 
-const ticketController = require("./controller/TicketController");
-app.use("/api/tickethub/tickets", ticketController);
 // PORT
 
 const PORT = 8800
