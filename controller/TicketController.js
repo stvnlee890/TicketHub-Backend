@@ -8,18 +8,20 @@ router.post("/ticket", async (req, res, next) => {
   const userPurchased = +req.body.userPurchased;
 
   try {
-    console.log("USER PURCHASED", userPurchased);
+    // find ticketDetails so we can decrement overall ticket count for that specific ticket type and event
     const findTicketDetails = await TicketDetails.findOne({
       concertId: req.body.concertId,
     });
+    // set up logic top level to immediately return if tickets aren't available
     if (findTicketDetails.quantity <= 0) return res.sendStatus(404);
     if (userPurchased > purchaseLimit) return res.sendStatus(406);
 
+    // update ticket details so that client can receive proper ticket number
     const ticketDetails = await TicketDetails.findOneAndUpdate(
       { concertId: req.body.concertId },
       { $inc: { quantity: -userPurchased } }
     );
-    console.log("TICKET QUANTITY", ticketDetails.quantity);
+    // creating user ticket after user purchase
     const ticket = await UserTicket.create(req.body);
     await ticket.populate("user");
     return res.status(200).json(ticketDetails);
