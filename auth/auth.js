@@ -28,6 +28,7 @@ passport.initialize();
 const requireToken = passport.authenticate("jwt", { session: false });
 
 const createUserToken = (req, user) => {
+  console.log("createtoken", user.password)
   if (
     !user ||
     !req.body.password ||
@@ -35,6 +36,7 @@ const createUserToken = (req, user) => {
   ) {
     const err = new Error("The provided username or password is incorrect");
     err.statusCode = 422;
+    console.log(err)
     throw err;
   }
   return jwt.sign({ id: user._id }, secret, { expiresIn: 36000 });
