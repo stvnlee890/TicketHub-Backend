@@ -10,9 +10,10 @@ router.post("/signup", async (req, res, next) => {
     const user = await User.create({ ...req.body, password });
     console.log(req.body);
     console.log(user);
-    return res.status(200).json(user);
+    return res.json({ body: user, status: 200 });
   } catch (error) {
     console.log(error);
+    return res.json(error);
   }
 });
 
