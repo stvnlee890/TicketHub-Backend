@@ -28,7 +28,6 @@ passport.initialize();
 const requireToken = passport.authenticate("jwt", { session: false });
 
 const createUserToken = (req, user) => {
-  console.log("createtoken", user.password)
   if (
     !user ||
     !req.body.password ||
