@@ -1,25 +1,31 @@
 const mongoose = require("../db/connection");
 
-const TicketDetailSchema = new mongoose.Schema({
+const TicketDetailSchema = new mongoose.Schema(
+  {
     concertId: {
-        type: String,
-        required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Concert",
     },
     ticketType: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
+    },
+    venue: {
+      type: String,
+      required: true,
     },
     price: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true,
     },
     quantity: {
-        type: Number,
-        required: true
-    }
-},
-{
+      type: Number,
+      required: true,
+    },
+  },
+  {
     timestamps: true,
-})
+  }
+);
 
-module.exports = mongoose.model("TicketDetails", TicketDetailSchema)
+module.exports = mongoose.model("TicketDetails", TicketDetailSchema);
