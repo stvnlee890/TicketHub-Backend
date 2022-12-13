@@ -1,6 +1,7 @@
 const express = require("express");
 const UserTicket = require("../model/UserTicket");
 const TicketDetails = require("../model/TicketDetails");
+const Concert = require("../model/Concerts");
 const User = require("../model/Users");
 const router = express.Router();
 
@@ -38,9 +39,11 @@ router.post("/ticket", async (req, res, next) => {
   }
 });
 
-router.post("/ticketDetails", async (req, res, next) => {
+router.post("/ticketDetails/", async (req, res, next) => {
   try {
-    const ticket = TicketDetails.create(req.body);
+    console.log(req.params);
+    const ticket = await TicketDetails.create(req.body);
+    await ticket.populate("concertId");
     return res.status(200).json(ticket);
   } catch (error) {
     console.log(error);
@@ -50,6 +53,16 @@ router.post("/ticketDetails", async (req, res, next) => {
 router.get("/ticketDetails/", async (req, res, next) => {
   try {
     const ticket = await TicketDetails.find({});
+    return res.status(200).json(ticket);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/ticketDetails/:concertId", async (req, res, next) => {
+  console.log(req.params);
+  try {
+    const ticket = await TicketDetails.find({ concertId: req.params.concertId });
     return res.status(200).json(ticket);
   } catch (error) {
     console.log(error);
